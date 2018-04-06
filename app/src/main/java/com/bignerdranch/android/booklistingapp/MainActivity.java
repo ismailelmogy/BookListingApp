@@ -1,24 +1,26 @@
 package com.bignerdranch.android.booklistingapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.app.LoaderManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, AdapterView.OnItemClickListener {
 
     private static final String BOOK_REQUEST_URL =
             "https://www.googleapis.com/books/v1/volumes?q=search+";
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(this);
 
     }
 
@@ -104,4 +107,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Book currentBook = mAdapter.getItem(position);
+        Uri uri = Uri.parse(currentBook.getBookUrl());
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
+    }
 }

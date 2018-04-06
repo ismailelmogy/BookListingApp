@@ -60,7 +60,9 @@ public final class QueryUtils {
 
                 String description = bookInfo.getString("description");
 
-                Book book = new Book(title ,authors,description);
+                String bookUrl = bookInfo.getString("previewLink");
+
+                Book book = new Book(title ,authors,description,bookUrl);
 
                 books.add(book);
             }
@@ -71,7 +73,6 @@ public final class QueryUtils {
 
         return books;
     }
-
 
 
             public static String formatListOfAuthors(JSONArray authorsList) throws JSONException {
