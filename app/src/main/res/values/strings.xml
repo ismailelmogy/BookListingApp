@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BookListingApp</string>
+    <string name="sample_book_title">Effective Java</string>
+    <string name="sample_book_author">Joshua Bloch</string>
+    <string name="sample_book_description">The Definitive Guide to Java Platform Best Practices</string>
+    <string name="search_hint">Keyword</string>
+    <string name="enter_search_keyword">Enter keyword</string>
+    <string name="search_btn">Search</string>
+</resources>
