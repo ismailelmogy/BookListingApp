@@ -16,21 +16,25 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 
     private static final String BOOK_REQUEST_URL =
             "https://www.googleapis.com/books/v1/volumes?q=search+";
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-
     private EditText mSearchEditText;
     private Button mSearchButton;
     BookAdapter mAdapter;
     private static final int BOOK_LOADER_ID = 1;
+    private View circleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        circleView = findViewById(R.id.loading_spinner);
+        circleView.setVisibility(GONE);
         mSearchEditText = findViewById(R.id.editText);
         mSearchButton = findViewById(R.id.btnSearch);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (mSearchEditText.getText().toString().length() > 0) {
 
                     if (isNetworkAvailable()) {
+                        circleView.setVisibility(View.VISIBLE);
                         restartLoader();
                     } else {
                         Toast.makeText(MainActivity.this, "No Internet Connection....Please connect the internet",
@@ -57,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listView.setAdapter(mAdapter);
 
     }
-
 
     private String getUrlForHttpRequest() {
         String formatUserInput = getUserInput().trim().replaceAll("\\s+", "+");
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
+        circleView.setVisibility(GONE);
         mAdapter.clear();
         if (books != null && !books.isEmpty()) {
             mAdapter.addAll(books);
@@ -98,6 +103,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 
 }

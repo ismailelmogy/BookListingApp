@@ -32,7 +32,6 @@ public final class QueryUtils {
     public static List<Book> extractFeatureFromJson(String bookJson) {
 
         if (TextUtils.isEmpty(bookJson)) {
-
             return null;
         }
 
@@ -42,7 +41,6 @@ public final class QueryUtils {
             JSONObject jsonResponse = new JSONObject(bookJson);
 
             if (jsonResponse.getInt("totalItems") == 0) {
-
                 return books;
             }
 
@@ -78,12 +76,11 @@ public final class QueryUtils {
 
             public static String formatListOfAuthors(JSONArray authorsList) throws JSONException {
 
-                String authorsListInString = null;
+              String authorsListInString = null;
 
                 if (authorsList.length() == 0) {
                     return null;
                 }
-
                 for (int i = 0; i < authorsList.length(); i++){
                     if (i == 0) {
                         authorsListInString = authorsList.getString(0);
@@ -96,15 +93,7 @@ public final class QueryUtils {
             }
 
 
-
  public static List<Book> fetchBookData(String requestUrl){
-
-
-//     try {
-//         Thread.sleep(2000);
-//     } catch (InterruptedException e) {
-//         e.printStackTrace();
-//     }
 
      // Create URL object
      URL url = createUrl(requestUrl);
@@ -114,11 +103,9 @@ public final class QueryUtils {
      try {
 
          jsonResponse = makeHttpRequest(url);
-
-     } catch (IOException e) {
-
+     }
+     catch (IOException e) {
          Log.e(LOG_TAG, "Error closing input stream", e);
-
      }
 
      Log.i(LOG_TAG,"data fetched");
